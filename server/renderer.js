@@ -7,9 +7,6 @@ import routes from '../views/routes.js';
 
 export default function renderReactPage(req, res, getStore){
   match({ routes, location: req.originalUrl }, (error, redirectLocation, renderProps)=>{
-    // console.log(error);
-    // console.log(redirectLocation);
-    // console.log(renderProps);
     if(error) res.status(500).send(error.message);
     else if(redirectLocation) res.redirect(302, redirectLocation.pathname+redirectLocation.search);
     else if(!renderProps) res.status(404).send('Not Found');  // Won't happen. Just in case.
@@ -33,7 +30,7 @@ export default function renderReactPage(req, res, getStore){
           </head>
           <body>
             <div id="root">${html}</div>
-            <script>window.__initilState__ = ${JSON.stringify(initialState)};</script>
+            <script>window.__initialState__ = ${JSON.stringify(initialState)};</script>
             <script src="/bundle.js"></script>
           </body>
           </html>

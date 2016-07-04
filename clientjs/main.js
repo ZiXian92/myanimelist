@@ -10,6 +10,7 @@ import routes from '../views/routes.js';
 const initialState = window.__initialState__;
 
 const store = createStore(reducers, initialState);
+console.log(store.getState());
 
 render(
   <Provider store={store}>

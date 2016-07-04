@@ -1,9 +1,10 @@
 'use strict';
 import React from 'react';
+import AnimeList from './animelist/animelistcontainer.js';
 
 const Home = ()=>(
   <div>
-    <h2>Home content</h2>
+    <AnimeList />
   </div>
 );
 
