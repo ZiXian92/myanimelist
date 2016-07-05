@@ -5,7 +5,20 @@ services:
       context: .
       dockerfile: Dockerfile
     command: bash -c "export NODE_ENV=development; npm install; gulp"
+    links:
+      - db
     ports:
       - "80:80"
     volumes:
       - ./:/src/:rw
+
+  db:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    volumes_from:
+      - dbdata
+
+  dbdata:
+    image: mongo:latest
+    command: echo "Data container"
