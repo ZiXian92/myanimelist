@@ -2,6 +2,7 @@
 import App from './app.jsx';
 import Home from './home.jsx';
 import Login from './login.jsx';
+import InitUser from './inituser.jsx';
 import Error404 from './404.jsx';
 
 const routes = [{
@@ -13,6 +14,9 @@ const routes = [{
   childRoutes: [{
     path: 'login',
     component: Login
+  }, {
+    path: 'init',
+    component: InitUser
   }, {
     path: '*',
     component: Error404

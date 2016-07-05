@@ -4,30 +4,30 @@ import bodyParser from 'body-parser';
 import { createStore } from 'redux';
 import reducers from '../views/reducers.js';
 import renderReactPage from './renderer';
+import db from './db.js';
+import { initCheck } from './policies.js';
+import { prepareStore } from './misc.js';
 
 const PORT = 80;
 
 const app = express();
 
 app.use(express.static('./public'));
+app.use((req, res, next) => {
+  console.log(`${req.method} ${req.url}`);
+  next();
+});
+app.use(initCheck);
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: false}));
+
+app.post('/init', (req, res) => {
+  console.log(req.body);
+  res.redirect('/');
+});
 
 app.get('*', (req, res)=>{
-  renderReactPage(req, res, ()=>{
-    return Promise.resolve(createStore(reducers, {
-      selectedAnime: '',
-      animeList: {
-        'code-geass': {
-          title: 'Code Geass',
-          description: 'An exiled prince gains the power of the Geass and sets out on a rebellion against the empire.'
-        },
-        'buddy-complex': {
-          title: 'Buddy Complex',
-          description: 'A school boy gets sent into the future where he becomes a pilot for the Free Pact Alliance.'
-        }
-      }
-    }));
-  })
+  renderReactPage(req, res, () => prepareStore(req));
 });
 
 app.listen(PORT, ()=>{
