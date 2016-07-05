@@ -1,18 +1,23 @@
 'use strict';
 import React from 'react';
 import { IndexLink } from 'react-router';
-import { Navbar, Nav, NavItem } from 'react-bootstrap';
+import { Navbar, Nav, NavItem, NavDropdown, MenuItem } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 
-const NavbarView = ()=>(
+const NavbarView = ({username})=>(
   <Navbar inverse fluid>
     <Navbar.Header>
       <Navbar.Brand><IndexLink to='/'>My Anime List</IndexLink></Navbar.Brand>
       <Navbar.Toggle />
     </Navbar.Header>
     <Navbar.Collapse>
-      <Nav>
+      <Nav pullRight>
+      {username?
+        <NavDropdown eventKey={1} title={username}>
+          <MenuItem eventKey={1.1}>Logout</MenuItem>
+        </NavDropdown>:
         <LinkContainer to={{ pathname: '/login' }}><NavItem eventKey={1}>Login</NavItem></LinkContainer>
+      }
       </Nav>
     </Navbar.Collapse>
   </Navbar>
