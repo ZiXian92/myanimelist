@@ -10,3 +10,8 @@ export function initCheck(req, res, next) {
     else next();
   });
 };
+
+const noDataRoutes = ['/login', '/init'];
+export function isNoDataRoute(url){
+  return !!noDataRoutes.find(route => url.startsWith(route));
+}
