@@ -8,7 +8,7 @@ const SALTROUNDS = 10;
 
 UserRouter.post('/', (req, res) => {
   let userData = req.body;
-  if(userData.username==='' || username.password==='') res.sendStatus(400);
+  if(!userData || !userData || !userData.password) res.sendStatus(400);
   else hash(userData, SALTROUNDS, (err, h) => {
     userData.password = h;
     UserModel.addUser(userData).then(result => res.sendStatus(200), err => res.sendStatus(500));

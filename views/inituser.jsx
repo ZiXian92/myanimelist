@@ -1,6 +1,6 @@
 'use strict';
 import React from 'react';
-import { withRouter } from 'react-router';
+import { withRouter, browserHistory } from 'react-router';
 import { Col, Form, FormGroup, ControlLabel, FormControl, Button } from 'react-bootstrap';
 require('isomorphic-fetch');
 
@@ -45,8 +45,9 @@ class InitUserPage extends React.Component {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify(this.state)
-    }).then(() => self.props.history.push('/login')).catch(() => {
-      console.log('Error adding initial user. Do something.');
+    }).then((res) => {
+      if(res.status===200) browserHistory.push('/login');
+      else console.log('Error adding initial user. Do something.');
     });
   }
   render(){
