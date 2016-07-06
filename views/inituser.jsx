@@ -1,9 +1,10 @@
 'use strict';
 import React from 'react';
+import { withRouter } from 'react-router';
 import { Col, FormGroup, ControlLabel, FormControl, Button } from 'react-bootstrap';
 // import { fetch } from 'isomorphic-fetch';
 
-export default class InitUser extends React.Component {
+class InitUserPage extends React.Component {
   constructor(){
     super();
     this.isValidUsername = this.isValidUsername.bind(this);
@@ -14,6 +15,11 @@ export default class InitUser extends React.Component {
       username: '',
       password: ''
     };
+  }
+  componentDidMount(){
+    this.props.router.setRouteLeaveHook(this.props.route, () => {
+      return false;
+    });
   }
   isValidUsername(){
     let validRegex = /^[\w]+([\.]?[\w]+)?$/;
@@ -48,3 +54,7 @@ export default class InitUser extends React.Component {
     );
   }
 };
+
+const InitUser = withRouter(InitUserPage);
+
+export default InitUser;
