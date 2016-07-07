@@ -1,6 +1,6 @@
 'use strict';
 import { createStore } from 'redux';
-import reducers from '../views/reducers.js';
+import reducers from '../../views/reducers.js';
 import db from './db.js';
 import { isNoDataRoute } from './policies.js';
 

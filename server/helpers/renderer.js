@@ -3,7 +3,7 @@ import React from 'react';
 import { renderToString } from 'react-dom/server';
 import { match, RouterContext } from 'react-router';
 import { Provider } from 'react-redux';
-import routes from '../views/routes.js';
+import routes from '../../views/routes.js';
 
 export default function renderReactPage(req, res, getStore){
   match({ routes, location: req.originalUrl }, (error, redirectLocation, renderProps)=>{

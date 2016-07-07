@@ -1,5 +1,5 @@
 'use strict';
-import db from '../db.js';
+import db from '../helpers/db.js';
 
 const UserModel = {
   /**
