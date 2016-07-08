@@ -2,7 +2,7 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import renderReactPage from './helpers/renderer.js';
-import { initCheck } from './helpers/policies.js';
+import { initCheck, requireLogin, requireAdmin } from './helpers/policies.js';
 import { prepareStore } from './helpers/misc.js';
 import ApiRouter from './api.js';
 import UserModel from './user/model.js';
@@ -31,7 +31,7 @@ app.use('/api', ApiRouter);  // Route for all API endpoints
 app.post('/init', initHandler);
 
 app.post('/login', loginHandler);   // Process login requests
-app.post('/refresh', refreshHandler);
+app.post('/refresh', requireLogin, refreshHandler);
 
 // All GET requests that end up here are assumed to be page requests
 app.get('*', (req, res)=>{

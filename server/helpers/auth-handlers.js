@@ -43,7 +43,6 @@ export function loginHandler(req, res) {
 }
 
 export function refreshHandler(req, res){
-  console.log(req.user);
   if(!req.user || !req.user.refresh) return res.sendStatus(401);
   let user = {
     _id: req.user._id,
