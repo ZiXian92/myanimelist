@@ -24,11 +24,12 @@ let decodeOptions = {
 };
 
 export function decodeJwt(req, res, next){
-  let token = req.headers['authorization'].replace('Bearer ', '');
-  if(token) verify(token, secret, decodeOptions, (err, decoded) => {
+  let token = req.headers['authorization'];
+  if(token) verify(token.replace('Bearer ', ''), secret, decodeOptions, (err, decoded) => {
     if(decoded) req.user = decoded;
+    next();
   });
-  next();
+  else next();
 }
 
 export function generateAccessToken(payload){
@@ -38,7 +39,7 @@ export function generateAccessToken(payload){
   }));
 }
 
-export function generateRefreshToken(){
+export function generateRefreshToken(payload){
   return new Promise((resolve, reject) => sign(payload, secret, refreshTokenConfig, (err, token) => {
     if(err) return reject(err);
     return resolve(token);
