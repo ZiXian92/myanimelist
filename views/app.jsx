@@ -1,6 +1,6 @@
 'use strict';
 import React from 'react';
-import NavbarContainer from './navbar/navbar.js';
+import NavbarContainer from './navbar/navbarcontainer.js';
 
 const App = ({children})=>(
   <div className="container-fluid">

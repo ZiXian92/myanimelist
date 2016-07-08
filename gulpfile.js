@@ -9,7 +9,7 @@ gulp.task('nodemon', function(){
   return nodemon({
     script: './server/server.js',
     ext: 'js jsx',
-    exec: 'babel-node --debug',
+    exec: 'babel-node',
     watch: ['./server/', './views/']
   }).on('start', function(){
     console.log('server started');

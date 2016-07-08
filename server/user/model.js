@@ -32,7 +32,6 @@ const UserModel = {
 
   getUserById: id =>
     db().then(conn => conn.collection('users').find({_id: new ObjectId(id) }).limit(1).next()).then(user => {
-      console.log(typeof id);
       if(!user) return Promise.reject({status: 404});
       return user;
     }, err => Promise.reject({status: 500}))

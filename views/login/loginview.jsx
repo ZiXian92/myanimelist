@@ -1,10 +1,11 @@
 'use strict';
 import React from 'react';
 import { browserHistory } from 'react-router';
+import objectAssign from 'object-assign';
 import { Col, Form, FormGroup, ControlLabel, FormControl, Button } from 'react-bootstrap';
-require('isomorphic-fetch');
+import { get, login } from '../fetch-wrapper.js';
 
-export default class Login extends React.Component {
+export default class LoginView extends React.Component {
   constructor(){
     super();
     this.isValidUsername = this.isValidUsername.bind(this);
@@ -16,6 +17,12 @@ export default class Login extends React.Component {
       username: '',
       password: ''
     };
+  }
+  componentDidMount(){
+    if(this.props.isLoggedIn) browserHistory.push('/');
+  }
+  componentDidUpdate(){
+    if(this.props.isLoggedIn) browserHistory.push('/');
   }
   isValidUsername(){
     let validRegex = /^[\w]+([\.]?[\w]+)?$/;
@@ -34,16 +41,18 @@ export default class Login extends React.Component {
   login(e){
     let self = this;
     e.preventDefault();
-    fetch('/login', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(this.state)
-    }).then((res) => {
-      if(res.status===200) browserHistory.push('/');
-      else console.log('Invalid login credentials.');
-    });
+    login(objectAssign({}, this.state)).then(res => {
+      if(res.status===200){
+        get('/api/me').then(res => {
+          if(res.status===200){
+            res.json().then(user => {
+              this.props.setUser(user);
+              browserHistory.push('/');
+            }).catch(err => console.log(err));
+          } else console.log('Something went wrong on server side.');
+        });
+      } else if(res.status===401) console.log('Invalid login credentials.');
+    }).catch(err => console.log(err));
   }
   render(){
     return (
@@ -63,3 +72,7 @@ export default class Login extends React.Component {
     );
   }
 }
+
+LoginView.propTypes = {
+  setUser: React.PropTypes.func.isRequired
+};

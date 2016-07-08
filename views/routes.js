@@ -1,7 +1,7 @@
 'use strict';
 import App from './app.jsx';
 import Home from './home.jsx';
-import Login from './login.jsx';
+import Login from './login/logincontainer.js';
 import InitUser from './inituser.jsx';
 import Error404 from './404.jsx';
 

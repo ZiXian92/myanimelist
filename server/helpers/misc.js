@@ -6,6 +6,11 @@ import { isNoDataRoute } from './policies.js';
 
 export function prepareStore(req){
   let state = {
+    user: req.user? {
+      _id: req.user._id,
+      username: req.user.username,
+      admin: req.user.admin
+    }: {},
     selectedAnime: '',
     animeList: {}
   };

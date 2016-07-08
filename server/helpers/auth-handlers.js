@@ -24,7 +24,7 @@ export function loginHandler(req, res) {
       if(err) res.sendStatus(500);
       else if(!result) res.sendStatus(401);
       else{
-        console.log(user);
+        delete user.password;
         Promise.all([generateAccessToken(objectAssign({}, user, {refresh: false})),
         generateRefreshToken(objectAssign({}, user, {refresh: true}))]).then((tokens) => {
           res.json({
